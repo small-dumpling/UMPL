@@ -9,7 +9,7 @@ We introduce UMPL, a unified semi-supervised framework for surrogate modeling un
 **Overview of the UMPL pipeline.** UMPL leverages both labeled and unlabeled data to enhance generalization under distribution shifts. The teacher generates pseudo labels via epistemic uncertainty, while the student learns from predicted states and their corresponding aleatoric uncertainties using heteroscedastic regression loss. The teacher is iteratively refined with feedback from the student’s performance on labeled data, forming a closed-loop training process that progressively improves pseudo-label quality. Both the teacher and student can be versatile forecasting models.
 
 
-**Performance Comparison.** Across diverse settings, UMPL exhibits clear advantages in both accuracy and calibration. (a) On the Ahmed test set (51 unseen geometries), the predicted drag coefficient $C_d$ and UMPL’s uncertainty show a markedly stronger alignment with ground truth than the fully supervised model, evidencing well-calibrated error–uncertainty correlation. (b) On the Stationary Lid dataset, the $L_2$ loss over the full parameter domain indicates uniformly lower errors for UMPL both inside and outside the training distribution (the red dashed boundary marks the in-distribution region); \textcolor{red}{$\bullet$}, \textcolor{yellow}{$*$}, and \textcolor{black}{$\cdot$} denote labeled, unlabeled, and test points, respectively. (c–e) Qualitative visualizations across datasets (with transient cases shown at the final time step) further reveal that UMPL produces sharper, artifact-free fields and better highlights high-error regions via calibrated uncertainty. Taken together, these results demonstrate UMPL’s superior generalization and data efficiency under limited labels, out-of-distribution regimes, and distribution shifts.
+**Performance Comparison.** Across diverse settings, UMPL exhibits clear advantages in both accuracy and calibration. (a) On the Ahmed test set comprising 51 unseen geometries, the predicted drag coefficient and UMPL’s uncertainty show a markedly stronger alignment with the ground truth than the fully supervised model, evidencing well-calibrated error–uncertainty correlation. (b) On the Stationary Lid dataset, the $L_2$ loss evaluated over the entire parameter domain indicates uniformly lower errors for UMPL both inside and outside the training distribution, where the red dashed boundary delineates the in-distribution region, and the labeled, unlabeled, and test samples are distinguished accordingly. (c–e) Qualitative visualizations across datasets, with transient cases shown at the final time step, further demonstrate that UMPL produces sharper, artifact-free fields and more accurately identifies high-error regions through calibrated uncertainty. Collectively, these results highlight UMPL’s superior generalization and data efficiency under limited-label, out-of-distribution, and distribution-shift conditions.
 
 <p align="center">
   <img src="figs/fig2.png" alt="Result Image" />
@@ -140,6 +140,7 @@ To run this project, simply execute `run.sh`.
 
 ## Contact
 If you have any questions or want to use the code, please contact 12332063@zju.edu.cn.
+
 
 
 
