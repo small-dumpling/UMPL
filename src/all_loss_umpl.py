@@ -87,24 +87,19 @@ def get_val_loss_lid2d(predict_hat, predict_hat_unc, state, if_rescale, info, no
     
     return losses
 
-import torch
-import torch.nn as nn
 
 class NLL_Loss(nn.Module):
-    def __init__(self, a=5.0, b=-2.5, eps=1e-5):
+    def __init__(self, a=5.0, b=-2.5, eps=1e-3):
         super().__init__()
         self.a = a
         self.b = b
         self.eps = eps
 
-    def forward(self, mu, sigma_norm, target):
-        # sigma_sq = F.softplus(self.a * sigma_norm + self.b) + self.eps
-        sigma_sq = sigma_norm + self.eps
-        loss = 0.5 * torch.log(2 * torch.pi * sigma_sq) + (target - mu) ** 2 / (2 * sigma_sq) + 1/sigma_sq*1e-3
-        return loss.mean()
+    def forward(self, y_pred, log_var, y_true):
+        # 将归一化的不确定度映射为有效的方差值
+        return torch.mean(0.5 * torch.exp(-log_var) * (y_true - y_pred)**2 + 0.5 * log_var)
 
     
-
 def get_train_loss_lid2d(predict_hat, predict_hat_unc, label_gt, 
                    loss_flag, if_rescale, info, node_mask):
     
