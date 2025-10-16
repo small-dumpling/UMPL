@@ -1,4 +1,4 @@
-# UMPL
+# UMPL(NeurIPS 2025)
 **UMPL: Uncertainty-Informed Meta Pseudo Labeling for Surrogate Modeling with Limited Labeled Data**
 
 In this work, we propose UMPL, a unified semi-supervised learning framework designed to enhance surrogate modeling under limited labeled data. While neural operators offer efficient alternatives to costly simulations, their reliance on large labeled datasets restricts their applicability in scientific domains. UMPL mitigates this issue by leveraging unlabeled data through uncertainty-informed pseudo-labeling. Specifically, the teacher model generates pseudo labels guided by epistemic uncertainty, while the student provides feedback based on aleatoric uncertainty, forming a meta-learning loop that improves pseudo-label quality and model generalization. Notably, UMPL is model-agnostic and can be integrated into diverse architectures to handle distribution shifts and out-of-distribution scenarios. Extensive evaluations across seven tasks show that UMPL achieves up to 14.18% improvement with only 10% labeled data, consistently outperforming strong semi-supervised baselines.
@@ -100,6 +100,8 @@ input_state2 = [
 - vtk==9.2.6
 - tensorboardX==2.6
 
+## Contact
+If you have any questions or want to use the code, please contact 12332063@zju.edu.cn.
 
 
 
