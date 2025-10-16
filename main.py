@@ -21,7 +21,7 @@ from torch.nn.functional import one_hot
 from src.lid2d import Lid2d_Dataset_Stationary
 from src.MGN import MeshGraphNet
 from src.MGN_with_uncertainty import MeshGraphNet_unc    
-from src.train_ts import forward_unc
+from src.train_umpl import forward_unc
 from utils import set_seed, init_weights, parse_args, collate
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = '3,4,5'
@@ -191,7 +191,7 @@ def main(args):
         
     # different SSL methods
     if args.method == "UMPL":
-        from src.train_UMPL import train, validate
+        from src.train_umpl import train, validate
     # elif args.method == "mean_TS":
     #     from src.train_mean_TS import train, validate
     # elif args.method == "PL":

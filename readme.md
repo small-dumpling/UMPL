@@ -1,7 +1,8 @@
 # UMPL(NeurIPS 2025)
-**UMPL: Uncertainty-Informed Meta Pseudo Labeling for Surrogate Modeling with Limited Labeled Data**
 
-In this work, we propose UMPL, a unified semi-supervised learning framework designed to enhance surrogate modeling under limited labeled data. While neural operators offer efficient alternatives to costly simulations, their reliance on large labeled datasets restricts their applicability in scientific domains. UMPL mitigates this issue by leveraging unlabeled data through uncertainty-informed pseudo-labeling. Specifically, the teacher model generates pseudo labels guided by epistemic uncertainty, while the student provides feedback based on aleatoric uncertainty, forming a meta-learning loop that improves pseudo-label quality and model generalization. Notably, UMPL is model-agnostic and can be integrated into diverse architectures to handle distribution shifts and out-of-distribution scenarios. Extensive evaluations across seven tasks show that UMPL achieves up to 14.18% improvement with only 10% labeled data, consistently outperforming strong semi-supervised baselines.
+UMPL: Uncertainty-Informed Meta Pseudo Labeling for Surrogate Modeling with Limited Labeled Data [[Paper]](https://neurips.cc/virtual/2025/poster/118229)
+
+We introduce UMPL, a unified semi-supervised framework for surrogate modeling under scarce labels. While neural operators efficiently replace costly simulations, their need for large labeled sets limits scientific use. UMPL exploits unlabeled data via uncertainty-informed pseudo-labeling: a teacher generates pseudo-labels guided by epistemic uncertainty, and a student provides aleatoric-uncertainty feedback in a meta-learning loop, improving pseudo-label quality and generalization. Model-agnostic and plug-in across architectures, UMPL handles distribution shifts and OOD cases. Across seven tasks, it achieves up to 14.18% gains with only 10% labeled data, consistently surpassing strong semi-supervised baselines.
 
 ![Method Image](figs/fig1.png)
 
@@ -13,6 +14,15 @@ In this work, we propose UMPL, a unified semi-supervised learning framework desi
 <p align="center">
   <img src="figs/fig2.png" alt="Result Image" />
 </p>
+
+## Dataset
+
+The datasets used in this paper can be downloaded from the following links:
+
+1. **Lid2D dataset**, including both steady-state and transient cases: https://drive.google.com/file/d/1GQhAhZTv85UhFHbYf8RXRUjEz66MJPQ_/view?usp=sharing;
+2. **Mag2D dataset**: https://drive.google.com/file/d/1i5pf1740e3yuwlEm2PkrOv6b42FhyY9_/view?usp=sharing;
+3. **ICP Plasma dataset**: https://drive.google.com/drive/folders/1eC6AobKZ2l_e_5kegmLSw6UEBemR8v3q?usp=sharing.
+
 
 ## Get Started
 
@@ -44,8 +54,6 @@ The project
 Add dataset folder if it does not exist, add data to corresponding dataset. You should change the environment settings in the file according to your own hardware configuration.
 
 Before training, we first perform supervised learning on the labeled data and save the resulting model weights as the initial parameters for both the teacher and student models.
-
-
 
 
 **Data Format:**
@@ -88,6 +96,36 @@ input_state2 = [
 ...
 ```
 - **input_field**: (N_points x C) numpy array, representing the input fields. For scalar parameters, we use broadcasting to replicate the value at each point as part of the input.
+
+We provide the training code for the steady-state Lid2D case here.
+
+```sh
+The project
+|
+└─── config
+|      ...
+└─── data_spilt
+|      ...
+└─── lid2d_31_31
+|      └─── lid2d_stationary
+|           └─── ...
+└─── src
+|      └─── all_loss_umpl.py
+|      └─── lid2d.py
+|      └─── MGN_with_uncertainty.py
+|      └─── train_umpl.py
+|      ...
+|    main.py
+|    get_label.py
+|    utils.py
+|    run.sh
+```
+
+- **Step1: Warmup**:  This step mainly performs supervised learning on the labeled data and generates the initial pseudo-labels.
+- **Step2: Feedback Training**:  This step trains the teacher and student models using the UMPL meta pseudo-labeling method. The trained student model is used for the final inference, enabling simultaneous prediction and uncertainty estimation. Statistical information (including the mean and variance) is stored in the `lid2d_mean_std` folder.
+
+To run this project, simply execute `run.sh`.
+
 
 ## Requirements
 
